@@ -1,3 +1,5 @@
+require 'date'
+
 Gem::Specification.new do |s|
   s.name              = %q{refinerycms-search}
   s.version           = %q{2.0.0}
