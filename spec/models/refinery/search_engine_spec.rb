@@ -20,6 +20,15 @@ module Refinery
           result.should be_empty
         end
       end
+
+      context "when page is draft" do
+        let!(:page) { FactoryGirl.create(:page, title: "drafty", draft: true) }
+
+        it "returns empty array" do
+          result = SearchEngine.search("drafty")
+          result.should be_empty
+        end
+      end
     end
   end
 end
