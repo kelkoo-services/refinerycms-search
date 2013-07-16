@@ -3,6 +3,8 @@ require "spec_helper"
 module Refinery
   describe SearchEngine do
     describe "#search" do
+      before { Page.acts_as_indexed fields: [ :title ], if: ->(p) { !p.draft? } }
+
       context "when page exist" do
         # we're using page factory because search engine uses
         # page model as default model
@@ -10,14 +12,14 @@ module Refinery
 
         it "returns an array consisting of mathcing pages" do
           result = SearchEngine.search("testy")
-          result.should include(page)
+          result[:results].should include(page)
         end
       end
 
       context "when page does not exist" do
         it "returns empty array" do
           result = SearchEngine.search("ugisozols")
-          result.should be_empty
+          result[:results].should be_empty
         end
       end
 
@@ -26,7 +28,7 @@ module Refinery
 
         it "returns empty array" do
           result = SearchEngine.search("drafty")
-          result.should be_empty
+          result[:results].should be_empty
         end
       end
     end
