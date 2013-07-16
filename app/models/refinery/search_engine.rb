@@ -11,7 +11,9 @@ module Refinery
       offset = page.to_i*per
 
       Refinery.searchable_models.each do |model|
-        results << model.with_query(query)
+        more_results = model.with_query(query)
+        more_results = more_results.order_for_search if more_results.respond_to?(:order_for_search)
+        results << more_results
       end if query.present?
 
       count = results.flatten.count
