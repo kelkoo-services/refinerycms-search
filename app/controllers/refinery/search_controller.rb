@@ -5,7 +5,7 @@ module Refinery
     def show
       query = params[:query]
       @page_number = params[:page].nil? ? 1 : params[:page].to_i
-      @search = Refinery::SearchEngine.search(query, @page_number)
+      @search = Refinery::SearchEngine.search(query, params[:tag], @page_number)
       @results = @search[:results]
       @count = @search[:count]
 
